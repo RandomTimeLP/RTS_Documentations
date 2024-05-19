@@ -1,4 +1,5 @@
 LICENCE
+MANIFEST.in
 README.md
 setup.py
 RTS_DocsBuilder/RInitiate.py
@@ -10,3 +11,6 @@ RTS_DocsBuilder.egg-info/dependency_links.txt
 RTS_DocsBuilder.egg-info/requires.txt
 RTS_DocsBuilder.egg-info/top_level.txt
 RTS_DocsBuilder/srcFolder/__init__.py
+RTS_DocsBuilder/srcFolder/downpointer.svg
+RTS_DocsBuilder/srcFolder/leftpointer.svg
+RTS_DocsBuilder/srcFolder/rightpointer.svg
