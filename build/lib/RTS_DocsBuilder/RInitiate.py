@@ -11,11 +11,11 @@ class RInitiate:
             while ws is None:
                 ws = rtswuib_cache.MAIN_WEBSERVER
                 if ws is None:
-                    print("⚠️  Webserver is not running yet. Waiting...")
                     time.sleep(1)  # Wait for 1 second before checking again
                 else:
-                    print("✅  Webserver is running.")
-                    ws.enableSourceRoute(os.path.normpath(os.path.join(os.getcwd(),"RTS_Documentations", "srcFolder")))
+                    modul_pfad = os.path.dirname(os.path.abspath(__file__))
+                    ziel_pfad = os.path.normpath(os.path.join(modul_pfad, "srcFolder"))
+                    ws.enableSourceRoute(ziel_pfad)
         except ImportError:
             print("⚠️  You may not remove the dependency module 'RTS_WebUIBuilder'.")
             return
