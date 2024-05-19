@@ -9,3 +9,4 @@ RTS_DocsBuilder.egg-info/SOURCES.txt
 RTS_DocsBuilder.egg-info/dependency_links.txt
 RTS_DocsBuilder.egg-info/requires.txt
 RTS_DocsBuilder.egg-info/top_level.txt
+RTS_DocsBuilder/srcFolder/__init__.py

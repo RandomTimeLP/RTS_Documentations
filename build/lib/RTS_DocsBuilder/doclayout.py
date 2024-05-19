@@ -38,7 +38,7 @@ class DocLayout:
         print("--------------------------------------------------------------------")
         print(self._modulename + " > " + self._currentTopic + " > " + str(self._currentsub))
         
-        module_name = self._modulename + ".docs.load"
+        module_name = self._modulename + ".docs.loads"
         module = importlib.import_module(module_name)
 
         docMemory = module.docMemory

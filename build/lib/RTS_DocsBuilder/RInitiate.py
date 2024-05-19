@@ -61,7 +61,13 @@ class RInitiate:
                     self.topics.append((os.path.splitext(py_files[0])[0], '/' + display_topic))
                     # Store the module path and function name
                     module_path = os.path.join(topic_path, os.path.splitext(py_files[0])[0])
-                    module_path = os.path.relpath(module_path, module_root_folder).replace(os.sep, '.')
+                    try:
+                        # Versuchen Sie, den relativen Pfad zu berechnen
+                        module_path = os.path.relpath(module_path, module_root_folder).replace(os.sep, '.')
+                    except ValueError:
+                        # Wenn sich die Pfade auf unterschiedlichen Laufwerken befinden, verwenden Sie den absoluten Pfad
+                        # und ersetzen Sie die Pfadtrennzeichen durch Punkte
+                        module_path = module_path.replace(os.sep, '.')
                     if module_path.startswith('...'):
                         module_path = module_path[3:]
                     function_name = os.path.splitext(py_files[0])[0]  # Get the function name from the file name
