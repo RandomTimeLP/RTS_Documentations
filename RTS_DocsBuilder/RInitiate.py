@@ -35,14 +35,19 @@ class RInitiate:
         else:
             docs_folder_path = module_root_folder
         if os.path.exists(docs_folder_path):
-            self.create_topic_subtopic_structure(docs_folder_path)
+            stack = inspect.stack()
+            caller_frame = stack[1]
+            caller_module = inspect.getmodule(caller_frame[0])
+            caller_path = caller_module.__file__
+            module_root_folder = os.path.dirname(os.path.abspath(caller_path))
+            self.create_topic_subtopic_structure(docs_folder_path,module_root_folder)
         else:
             print("No 'docs' folder exists in the module root folder.")
 
-    def create_topic_subtopic_structure(self, docs_folder_path):
+    def create_topic_subtopic_structure(self, docs_folder_path, module_root_folder):
         
-        # Get the root folder of the module
-        module_root_folder = os.path.dirname(os.path.abspath(__file__))
+        # Durchsuchen Sie den Stack, um den Pfad des aufrufenden Skripts zu finden
+        
     
         # Initialize the 'subtopics' list and 'initiator' list
         self.subtopics = []
@@ -61,13 +66,18 @@ class RInitiate:
                     self.topics.append((os.path.splitext(py_files[0])[0], '/' + display_topic))
                     # Store the module path and function name
                     module_path = os.path.join(topic_path, os.path.splitext(py_files[0])[0])
+                    print("Module Path: ", module_path)
+                    print("Module Root Folder: ", module_root_folder)
                     try:
                         # Versuchen Sie, den relativen Pfad zu berechnen
                         module_path = os.path.relpath(module_path, module_root_folder).replace(os.sep, '.')
+                        print("Module Path: ", module_path)
                     except ValueError:
                         # Wenn sich die Pfade auf unterschiedlichen Laufwerken befinden, verwenden Sie den absoluten Pfad
                         # und ersetzen Sie die Pfadtrennzeichen durch Punkte
                         module_path = module_path.replace(os.sep, '.')
+                    print("Module Path: ", module_path)
+
                     if module_path.startswith('...'):
                         module_path = module_path[3:]
                     function_name = os.path.splitext(py_files[0])[0]  # Get the function name from the file name
@@ -97,18 +107,3 @@ class RInitiate:
             print("Topics: ", self.topics)
             print("Subtopics: ", self.subtopics)
     
-    def execute_initiator(self):
-        for module_path, function_name in self.initiator:
-            #try:
-                # Import the module
-                module = importlib.import_module(module_path)
-                # Get the function
-                function = getattr(module, function_name)
-                # Call the function
-                function()
-            #except ImportError as e:
-            #    print(f"Failed to import module {module_path}. Error: ", e)
-            #    return
-            #except AttributeError as e:
-            #    print(f"Failed to find function {function_name} in module {module_path}. Error: ", e)
-            #    return
